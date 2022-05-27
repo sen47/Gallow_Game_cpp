@@ -4,7 +4,9 @@
 #include<cstdint>
 #include<iostream>
 
-class GameWithNumber
+#include"Games.h"
+
+class GameWithNumber :public Games
 {
 public:
 	GameWithNumber(const std::uint16_t hiddenLenght);
@@ -17,6 +19,8 @@ public:
 	void thinkPcNumber();
 	void enterPlayerNumber();
 	
+	void playRound() override;
+
 	void printPcNumber();
 	void printPlayerNumber();
 

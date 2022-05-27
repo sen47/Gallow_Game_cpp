@@ -81,6 +81,11 @@ void GameWithNumber::enterPlayerNumber()
 	}
 }
 
+void GameWithNumber::playRound()
+{
+	std::cout << "PlayGame temp" << std::endl;
+}
+
 ////////////////////////////////////////////////////////////////////////// Test
 
 void GameWithNumber::printPcNumber()

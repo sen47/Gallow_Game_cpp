@@ -135,6 +135,7 @@
   <ItemGroup>
     <ClInclude Include="DataCheck.h" />
     <ClInclude Include="Gallow.h" />
+    <ClInclude Include="Games.h" />
     <ClInclude Include="GameWithNumber.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

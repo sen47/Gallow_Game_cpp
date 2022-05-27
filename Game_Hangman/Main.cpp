@@ -5,6 +5,7 @@
 #include<string>
 #include<ctime>
 
+#include"Games.h"
 #include"Gallow.h"
 #include"GameWithNumber.h"
 #include"DataCheck.h"
@@ -26,46 +27,73 @@ int main()
 	srand(static_cast<std::uint32_t>(time(NULL)));
 	
 	static const std::int16_t MAX_TRYES(7);
-	Game game(choosingGame());
+	Game chooseGame(choosingGame());
 	std::int16_t mistakes(0), difficulty(choosingDifficulty());
 	std::int16_t hiddenLenght(difficulty + 3);
 
-	// This obj draw gallow
-	Gallow gallow;
+	Games* game{ nullptr };
 
-	if (game == Game::NUMBERS)
+	switch (chooseGame)
 	{
-		GameWithNumber numberGame(hiddenLenght);
-		numberGame.thinkPcNumber();
-		DataCheck check(numberGame.getPC(), numberGame.getHiddenLenght(), difficulty);
+	case Game::NUMBERS:
+		game = new GameWithNumber(hiddenLenght);
+		break;
+	case Game::WORDS:
 
-		do
+		break;
+	}
+
+
+
+	do
+	{
+		game->playRound();
+		if (check.isEquals(numberGame.getPlayer()))
 		{
-			gallow.printGallow(mistakes);
+			break;
+		}
+		else
+			++mistakes;
 
-#ifdef DEBUG_PC
-			std::cout << "\nTEST\t";
-			numberGame.printPcNumber();
-#endif // DEBUG_PC
+	} while (mistakes < MAX_TRYES);
+	
 
-			check.printCheck(numberGame.getPlayer(), mistakes);
-
-			std::cout << "\n\nYou have " << MAX_TRYES - mistakes << " tryes" << std::endl;
-			numberGame.enterPlayerNumber();
-
-			if (check.isEquals(numberGame.getPlayer()))
-			{
-				break;
-			}
-			else
-				++mistakes;
-
-		} while (mistakes < 7);
-	}
-	else if (game == Game::WORDS)
-	{
-
-	}
+//	// This obj draw gallow
+//	Gallow gallow;
+//
+//	if (game == Game::NUMBERS)
+//	{
+//		GameWithNumber numberGame(hiddenLenght);
+//		numberGame.thinkPcNumber();
+//		DataCheck check(numberGame.getPC(), numberGame.getHiddenLenght(), difficulty);
+//
+//		do
+//		{
+//			gallow.printGallow(mistakes);
+//
+//#ifdef DEBUG_PC
+//			std::cout << "\nTEST\t";
+//			numberGame.printPcNumber();
+//#endif // DEBUG_PC
+//
+//			check.printCheck(numberGame.getPlayer(), mistakes);
+//
+//			std::cout << "\n\nYou have " << MAX_TRYES - mistakes << " tryes" << std::endl;
+//			numberGame.enterPlayerNumber();
+//
+//			if (check.isEquals(numberGame.getPlayer()))
+//			{
+//				break;
+//			}
+//			else
+//				++mistakes;
+//
+//		} while (mistakes < 7);
+//	}
+//	else if (game == Game::WORDS)
+//	{
+//
+//	}
 	
 	system("cls");
 
@@ -73,9 +101,11 @@ int main()
 		std::cout << "\n\n\n\tCongratulations mortal, you saved your worthless live!\n\tGet out of here, before i change my mind!" << std::endl;
 	else
 	{
-		gallow.printGallow(mistakes);
+		//gallow.printGallow(mistakes);
 		std::cout << "\n\n\tYou lose mortal!\n\tNow your soul is mine!" << std::endl;
 	}
+
+	delete game;
 
 	return 0;
 }
